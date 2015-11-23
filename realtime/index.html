@@ -98,6 +98,18 @@
 			newMeshes[0].position.z=0;
 			 newMeshes[0].position.y=-5;
 			 newMeshes[0].renderingGroupId = 2;
+				});		
+					 BABYLON.SceneLoader.ImportMesh("", "", "pool.babylon", scene, function (newMeshes) {
+			// Set the target of the camera to the first imported mesh
+			
+			  newMeshes[0].position.x=100;
+			  newMeshes[0].position.z=100;
+			  newMeshes[0].position.y=-10;
+			 // newMeshes[1].position.x=100;
+			  //newMeshes[1].position.z=100;
+			 // newMeshes[1].position.y=-5;
+			 newMeshes[0].renderingGroupId = 2;
+			 //newMeshes[1].renderingGroupId = 2;
 				});					
 			 //-----------
             return scene;
