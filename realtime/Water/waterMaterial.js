@@ -25,11 +25,11 @@
             BABYLON.clipPlane = null;
         };
 
-        this.waterColor = new BABYLON.Color3(0.0, 0.3, 0.7);
-        this.waterColorLevel = 0.2;
-        this.fresnelLevel = 1.0;
+        this.waterColor = new BABYLON.Color4(0.3, 1.0, 1.0,0.0001);
+        this.waterColorLevel = 0.5;
+        this.fresnelLevel = 6.0;
         this.reflectionLevel = 0.6;
-        this.refractionLevel = 1.6;
+        this.refractionLevel = 10.0;
         
         this.waveLength = 0.5;
         this.waveHeight = 0.15;
@@ -56,7 +56,8 @@
 
         results.push(this.reflectionTexture);
         results.push(this.refractionTexture);
-
+		 results.push(this.reflectionTexture);
+		  results.push(this.reflectionTexture);
         return results;
     };
 
