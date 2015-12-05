@@ -174,9 +174,9 @@
 				if(camera.rotation.x <-Math.PI/3) camera.rotation.x =-Math.PI/3;
 				if(camera.rotation.x >Math.PI/3) camera.rotation.x =Math.PI/3;
 				});
-			scene.fogMode = BABYLON.Scene.FOGMODE_EXP;
-			scene.fogDensity = 0.004;
-			scene.fogColor = new BABYLON.Color3(0.9, 0.9, 0.85);
+			//scene.fogMode = BABYLON.Scene.FOGMODE_EXP;
+			//scene.fogDensity = 0.004;
+			//scene.fogColor = new BABYLON.Color3(0.9, 0.9, 0.85);
 			 // water shading
 			BABYLON.Engine.ShadersRepository="";
 			var water = BABYLON.Mesh.CreateGround("water", 34, 38, 1, scene, false);	
@@ -237,7 +237,7 @@
 			// ------------
 			// createSnow
 			// Create a particle system
-		var particleSystem = new BABYLON.ParticleSystem("particles", 1500, scene);
+		var particleSystem = new BABYLON.ParticleSystem("particles", 4500, scene);
 
 		//Texture of each particle
 		particleSystem.particleTexture = new BABYLON.Texture("textures/flare.png", scene);
@@ -248,13 +248,13 @@
 		particleSystem.maxEmitBox = new BABYLON.Vector3(100, 5, 100); // To...
 
 		// Colors of all particles
-		particleSystem.color1 = new BABYLON.Color4(1, 1, 1, 0.7);
-		particleSystem.color2 = new BABYLON.Color4(1, 1, 1, 0.5);
-		particleSystem.colorDead = new BABYLON.Color4(1, 1, 1, 0.2);
+		particleSystem.color1 = new BABYLON.Color4(0.2, 0.2, 0.2, 0.2);
+		particleSystem.color2 = new BABYLON.Color4(0.5, 0.5, 0.5, 0.2);
+		particleSystem.colorDead = new BABYLON.Color4(0, 0, 0, 0.0);
 
 		// Size of each particle (random between...
 		particleSystem.minSize = 1.0;
-		particleSystem.maxSize = 2.0;
+		particleSystem.maxSize = 5.0;
 
 		// Life time of each particle (random between...
 		particleSystem.minLifeTime = 5;
