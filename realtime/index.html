@@ -104,6 +104,7 @@
 		}
 		</script>
 		<script src="Water/waterMaterial.js"></script>
+		<script src="Fire/fireMaterial.js"></script>
         <style>
             html, body {
                 overflow: hidden;
@@ -143,7 +144,7 @@
             camera.rotation=new BABYLON.Vector3(0,0,0);
         
             //Ground
-            var plane = BABYLON.Mesh.CreateGround("plane", 1000, 1000, 1, scene, false);
+            var plane = BABYLON.Mesh.CreateGround("plane", 500, 500, 1, scene, false);
             plane.position.y = -6;
             //Creation of a repeated textured material
             var materialPlane = new BABYLON.StandardMaterial("texturePlane", scene);
@@ -186,6 +187,16 @@
 			
 			 //-----------
 			//---------Loading Object
+			 BABYLON.SceneLoader.ImportMesh("", "", "campfire.babylon", scene, function (newMeshes) {
+			// Set the target of the camera to the first imported mesh
+			newMeshes[0].position.z=20;
+			 newMeshes[0].position.y=-6;
+			 newMeshes[0].checkCollisions=true;
+			  newMeshes[0].scaling.x=2;
+			  newMeshes[0].scaling.y=2;
+			   newMeshes[0].scaling.z=2;
+			 //newMeshes[0].renderingGroupId = 2;
+				});		
 			  BABYLON.SceneLoader.ImportMesh("", "", "dogoo2.babylon", scene, function (newMeshes) {
 			// Set the target of the camera to the first imported mesh
 			newMeshes[0].position.z=0;
@@ -237,9 +248,9 @@
 		particleSystem.maxEmitBox = new BABYLON.Vector3(100, 5, 100); // To...
 
 		// Colors of all particles
-		particleSystem.color1 = new BABYLON.Color4(1, 1, 1, 0.0);
-		particleSystem.color2 = new BABYLON.Color4(1, 1, 1, 0.0);
-		particleSystem.colorDead = new BABYLON.Color4(1, 1, 1, 0.3);
+		particleSystem.color1 = new BABYLON.Color4(1, 1, 1, 0.7);
+		particleSystem.color2 = new BABYLON.Color4(1, 1, 1, 0.5);
+		particleSystem.colorDead = new BABYLON.Color4(1, 1, 1, 0.2);
 
 		// Size of each particle (random between...
 		particleSystem.minSize = 1.0;
@@ -298,12 +309,98 @@
                 particle.direction.addInPlace(this._scaledGravity);
            }
      } 
-		}
-		
-    // Start the particle system
-		particleSystem.start();
-			 
+		};
+			// Start the particle system
+			particleSystem.start();			
 			// ----------------
+			// FireCamp
+			//Smoke
+			var smokeSystem = new BABYLON.ParticleSystem("particless", 2000, scene);
+			smokeSystem.particleTexture = new BABYLON.Texture("textures/flare.png", scene);
+			smokeSystem.emitter = new BABYLON.Vector3(0, -6, 20);
+			smokeSystem.minEmitBox = new BABYLON.Vector3(-1, 1, -1); // Starting all from
+			smokeSystem.maxEmitBox = new BABYLON.Vector3(1, 1, 1); // To...
+			
+			smokeSystem.color1 = new BABYLON.Color4(0.1, 0.1, 0.1, 1.0);
+			smokeSystem.color2 = new BABYLON.Color4(0.1, 0.1, 0.1, 1.0);
+			smokeSystem.colorDead = new BABYLON.Color4(0, 0, 0, 0.0);
+			
+			smokeSystem.minSize = 0.5;
+			smokeSystem.maxSize = 2;
+
+			smokeSystem.minLifeTime = 0.3;
+			smokeSystem.maxLifeTime = 1.5;
+
+			smokeSystem.emitRate = 500;
+
+			// Blend mode : BLENDMODE_ONEONE, or BLENDMODE_STANDARD
+			smokeSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+
+			smokeSystem.gravity = new BABYLON.Vector3(0, 0, 0);
+
+			smokeSystem.direction1 = new BABYLON.Vector3(0, 8, 0);
+			smokeSystem.direction2 = new BABYLON.Vector3(0, 8, 0);
+
+			smokeSystem.minAngularSpeed = 0;
+			   smokeSystem.maxAngularSpeed = Math.PI;
+
+			smokeSystem.minEmitPower = 1;
+			smokeSystem.maxEmitPower = 2;
+			smokeSystem.updateSpeed = 0.005;
+
+			smokeSystem.start();
+			
+			
+			
+			// Create a particle system
+			var fireSystem = new BABYLON.ParticleSystem("particlesf", 2000, scene);
+
+			//Texture of each particle
+			fireSystem.particleTexture = new BABYLON.Texture("textures/flare.png", scene);
+
+			// Where the particles come from
+			fireSystem.emitter = new BABYLON.Vector3(0, -6, 20); // the starting object, the emitter
+			fireSystem.minEmitBox = new BABYLON.Vector3(-0.5, 1, -0.5); // Starting all from
+			fireSystem.maxEmitBox = new BABYLON.Vector3(0.5, 1, 0.5); // To...
+
+			// Colors of all particles
+			fireSystem.color1 = new BABYLON.Color4(1, 0.5, 0, 1.0);
+			fireSystem.color2 = new BABYLON.Color4(1, 0.5, 0, 1.0);
+			fireSystem.colorDead = new BABYLON.Color4(0, 0, 0, 0.0);
+
+			// Size of each particle (random between...
+			fireSystem.minSize = 0.5;
+			fireSystem.maxSize = 1;
+
+			// Life time of each particle (random between...
+			fireSystem.minLifeTime = 0.2;
+			fireSystem.maxLifeTime = 0.4;
+
+			// Emission rate
+			fireSystem.emitRate = 500;
+
+			// Blend mode : BLENDMODE_ONEONE, or BLENDMODE_STANDARD
+			fireSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+
+			// Set the gravity of all particles
+			fireSystem.gravity = new BABYLON.Vector3(0, 0, 0);
+
+			// Direction of each particle after it has been emitted
+			fireSystem.direction1 = new BABYLON.Vector3(0, 8, 0);
+			fireSystem.direction2 = new BABYLON.Vector3(0, 8, 0);
+
+			// Angular speed, in radians
+			fireSystem.minAngularSpeed = 0;
+			fireSystem.maxAngularSpeed = Math.PI;
+
+			// Speed
+			fireSystem.minEmitPower = 1;
+			fireSystem.maxEmitPower = 3;
+			fireSystem.updateSpeed = 0.005;
+
+			// Start the particle system
+			fireSystem.start();
+			//------------
             return scene;
         };
         
