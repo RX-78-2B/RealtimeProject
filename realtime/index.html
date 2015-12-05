@@ -129,16 +129,18 @@
 		
         var createScene = function () {
             var scene = new BABYLON.Scene(engine);
+			scene.collisionsEnabled = true;
 			//scene.clearColor = new BABYLON.Color3(0.5, 0.8, 0.5);
 			//scene.ambientColor = new BABYLON.Color3(0.3, 0.3, 0.3);
             //Create a light
             //var light = new BABYLON.DirectionalLight("dir01", new BABYLON.Vector3(0.5, -1, -0.5), scene);
         	var  light = new BABYLON.PointLight("dir01", new BABYLON.Vector3(60, 100, 10), scene);
             //Create an Arc Rotate Camera - aimed negative z this time
-            var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 1, 0), scene);
+            var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 0, 0), scene);
             camera.attachControl(canvas, true);
-        
-           
+			camera.checkCollisions = true;
+			camera.position=new BABYLON.Vector3(0, 1, -20);
+            camera.rotation=new BABYLON.Vector3(0,0,0);
         
             //Ground
             var plane = BABYLON.Mesh.CreateGround("plane", 1000, 1000, 1, scene, false);
@@ -168,10 +170,12 @@
 				skybox.rotation.y += 0.0001;	
 				if(camera.position.y <0) camera.position.y =0;
 				//if(camera.position.y >0) camera.position.y =0;
+				if(camera.rotation.x <-Math.PI/3) camera.rotation.x =-Math.PI/3;
+				if(camera.rotation.x >Math.PI/3) camera.rotation.x =Math.PI/3;
 				});
-			//scene.fogMode = BABYLON.Scene.FOGMODE_EXP;
-			//scene.fogDensity = 0.004;
-			//scene.fogColor = new BABYLON.Color3(0.9, 0.9, 0.85);
+			scene.fogMode = BABYLON.Scene.FOGMODE_EXP;
+			scene.fogDensity = 0.004;
+			scene.fogColor = new BABYLON.Color3(0.9, 0.9, 0.85);
 			 // water shading
 			BABYLON.Engine.ShadersRepository="";
 			var water = BABYLON.Mesh.CreateGround("water", 34, 38, 1, scene, false);	
@@ -186,6 +190,7 @@
 			// Set the target of the camera to the first imported mesh
 			newMeshes[0].position.z=0;
 			 newMeshes[0].position.y=-5;
+			 newMeshes[0].checkCollisions=true;
 			 //newMeshes[0].renderingGroupId = 2;
 				});		
 			  BABYLON.SceneLoader.ImportMesh("", "", "dogoo.babylon", scene, function (newMeshes) {
@@ -193,6 +198,7 @@
 			newMeshes[0].position.x=20;
 			newMeshes[0].position.z=0;
 			 newMeshes[0].position.y=-5;
+			 newMeshes[0].checkCollisions=true;
 			// newMeshes[0].renderingGroupId = 2;
 				});	
 					BABYLON.SceneLoader.ImportMesh("", "", "dogoo3.babylon", scene, function (newMeshes) {
@@ -201,6 +207,7 @@
 			newMeshes[0].position.x=40;
 			newMeshes[0].position.z=0;
 			 newMeshes[0].position.y=-5;
+			 newMeshes[0].checkCollisions=true;
 			 //newMeshes[0].renderingGroupId = 2;
 				});		
 			waterMaterial.reflectionTexture.renderList.push(skybox);	
@@ -219,19 +226,19 @@
 			// ------------
 			// createSnow
 			// Create a particle system
-		var particleSystem = new BABYLON.ParticleSystem("particles", 15000, scene);
+		var particleSystem = new BABYLON.ParticleSystem("particles", 1500, scene);
 
 		//Texture of each particle
 		particleSystem.particleTexture = new BABYLON.Texture("textures/flare.png", scene);
 
 		// Where the particles come from
 		particleSystem.emitter =  new BABYLON.Vector3(0, 50, 0);; // the starting object, the emitter
-		particleSystem.minEmitBox = new BABYLON.Vector3(-1, 0, 0); // Starting all from
-		particleSystem.maxEmitBox = new BABYLON.Vector3(1, 0, 0); // To...
+		particleSystem.minEmitBox = new BABYLON.Vector3(-100, 0, -100); // Starting all from
+		particleSystem.maxEmitBox = new BABYLON.Vector3(100, 5, 100); // To...
 
 		// Colors of all particles
-		particleSystem.color1 = new BABYLON.Color4(1, 1, 1, 0.5);
-		particleSystem.color2 = new BABYLON.Color4(1, 1, 1, 1.0);
+		particleSystem.color1 = new BABYLON.Color4(1, 1, 1, 0.0);
+		particleSystem.color2 = new BABYLON.Color4(1, 1, 1, 0.0);
 		particleSystem.colorDead = new BABYLON.Color4(1, 1, 1, 0.3);
 
 		// Size of each particle (random between...
@@ -262,10 +269,39 @@
 		// Speed
 		particleSystem.minEmitPower = 1;
 		particleSystem.maxEmitPower = 3;
-		particleSystem.updateSpeed = 0.005;
+		particleSystem.updateSpeed = 0.002;
+		// implement updatefunction
+		particleSystem.updateFunction = function(particles) {
+			for (var index = 0; index < particles.length; index++) {
+           var particle = particles[index];
+           particle.age += this._scaledUpdateSpeed;
+			
+           if (particle.age >= particle.lifeTime || particle.position.y<plane.position.y+1) { // Recycle
+                particles.splice(index, 1);
+                this._stockParticles.push(particle);
+                index--;
+                continue;
+           }
+           else {
+                particle.colorStep.scaleToRef(this._scaledUpdateSpeed, this._scaledColorStep);
+                particle.color.addInPlace(this._scaledColorStep);
 
+                if (particle.color.a < 0)
+                             particle.color.a = 0;
+
+                particle.angle += particle.angularSpeed * this._scaledUpdateSpeed;
+
+                particle.direction.scaleToRef(this._scaledUpdateSpeed, this._scaledDirection);
+                particle.position.addInPlace(this._scaledDirection);
+
+                this.gravity.scaleToRef(this._scaledUpdateSpeed, this._scaledGravity);
+                particle.direction.addInPlace(this._scaledGravity);
+           }
+     } 
+		}
+		
     // Start the particle system
-    particleSystem.start();
+		particleSystem.start();
 			 
 			// ----------------
             return scene;
