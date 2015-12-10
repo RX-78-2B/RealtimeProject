@@ -230,6 +230,14 @@
 			  newMeshes[0].position.y=0-2.5;
 			 // newMeshes[0].renderingGroupId = 2;
 				});		
+				var fountain = BABYLON.SceneLoader.ImportMesh("", "", "fountain.babylon", scene, function (newMeshes) {
+			// Set the target of the camera to the first imported mesh
+			  waterMaterial.reflectionTexture.renderList.push(newMeshes[0]);
+			  newMeshes[0].position.x=50;
+			  newMeshes[0].position.z=50;
+			  newMeshes[0].position.y=-5;
+			 // newMeshes[0].renderingGroupId = 2;
+				});		
 			// set reflection 
 			waterMaterial.reflectionTexture.renderList.push(plane);				
 			waterMaterial.reflectionTexture.renderList.push(skybox);		
