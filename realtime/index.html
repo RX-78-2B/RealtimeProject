@@ -479,8 +479,8 @@
 		var fountain = BABYLON.Mesh.CreateBox("fountain",0.1,scene);
 		fountain.position=new BABYLON.Vector3(-100,15,-100);
 		// Create a particle system
-    var particleSystemx = new BABYLON.ParticleSystem("particles", 3000, scene);
-	var particleSystemz = new BABYLON.ParticleSystem("particles", 3000, scene);
+    var particleSystemx = new BABYLON.ParticleSystem("particles", 4000, scene);
+	var particleSystemz = new BABYLON.ParticleSystem("particles", 4000, scene);
 
     //Texture of each particle
     particleSystemx.particleTexture = new BABYLON.Texture("textures/bubble.png", scene);
@@ -495,18 +495,18 @@
 	particleSystemz.maxEmitBox = new BABYLON.Vector3(0, 1, 0);
 		
     // Colors of all particles
-    particleSystemx.color1 = new BABYLON.Color4(0.1, 0.1, 0.1,0.001);
-    particleSystemx.color2 = new BABYLON.Color4(0.1,0.1, 0.1, 0.001);
-    particleSystemx.colorDead = new BABYLON.Color4(0, 0, 0.2, 0.0);
-	particleSystemz.color1 = new BABYLON.Color4(0.7, 0.8, 1.0, 0.001);
-    particleSystemz.color2 = new BABYLON.Color4(0.2, 0.5, 1.0, 0.001);
-    particleSystemz.colorDead = new BABYLON.Color4(0, 0, 0.2, 0.0);
+    particleSystemx.color1 = new BABYLON.Color4(0.1, 0.1, 0.1,0.0001);
+    particleSystemx.color2 = new BABYLON.Color4(0.1,0.1, 0.1, 0.0001);
+    particleSystemx.colorDead = new BABYLON.Color4(0.1, 0.1, 0.1, 0.0);
+	particleSystemz.color1 = new BABYLON.Color4(0.1, 0.1, 0.1, 0.0001);
+    particleSystemz.color2 = new BABYLON.Color4(0.1, 0.1, 0.1, 0.0001);
+    particleSystemz.colorDead = new BABYLON.Color4(0.1, 0.1, 0.1, 0.0);
 	//particleSystem.startDirectionFunction(3, BABYLON.Matrix, BABYLON.Vector3);
 
     // Size of each particle (random between...
-    particleSystemx.minSize = 1;
+    particleSystemx.minSize = 0.1;
     particleSystemx.maxSize = 1;
-	particleSystemz.minSize = 1;
+	particleSystemz.minSize = 0.1;
     particleSystemz.maxSize = 1;
 
     // Life time of each particle (random between...
@@ -516,8 +516,8 @@
     particleSystemz.maxLifeTime = 5.0;
 
     // Emission rate
-    particleSystemx.emitRate = 1000;
-	particleSystemz.emitRate = 1000;
+    particleSystemx.emitRate = 3500;
+	particleSystemz.emitRate = 3500;
 
     // Blend mode : BLENDMODE_ONEONE, or BLENDMODE_STANDARD
     particleSystemx.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
@@ -532,9 +532,9 @@
 	particleSystemz.direction2 = new BABYLON.Vector3(0, 6, -2);
 
     // Angular speed, in radians
-    particleSystemx.minAngularSpeed = 0;
+    particleSystemx.minAngularSpeed = 1;
     particleSystemx.maxAngularSpeed = Math.PI;
-	particleSystemz.minAngularSpeed = 0;
+	particleSystemz.minAngularSpeed = 1;
     particleSystemz.maxAngularSpeed = Math.PI;
 
     // Speed
