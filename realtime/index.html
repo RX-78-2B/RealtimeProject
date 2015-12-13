@@ -483,8 +483,8 @@
 	var particleSystemz = new BABYLON.ParticleSystem("particles", 3000, scene);
 
     //Texture of each particle
-    particleSystemx.particleTexture = new BABYLON.Texture("textures/flare.png", scene);
-	particleSystemz.particleTexture = new BABYLON.Texture("textures/flare.png", scene);
+    particleSystemx.particleTexture = new BABYLON.Texture("textures/bubble.png", scene);
+	particleSystemz.particleTexture = new BABYLON.Texture("textures/bubble.png", scene);
 	
     // Where the particles come from
     particleSystemx.emitter = fountain; // the starting object, the emitter
@@ -495,11 +495,11 @@
 	particleSystemz.maxEmitBox = new BABYLON.Vector3(0, 1, 0);
 		
     // Colors of all particles
-    particleSystemx.color1 = new BABYLON.Color4(0.1, 0.1, 0.1,0.01);
-    particleSystemx.color2 = new BABYLON.Color4(0.1,0.1, 0.1, 0.01);
+    particleSystemx.color1 = new BABYLON.Color4(0.1, 0.1, 0.1,0.001);
+    particleSystemx.color2 = new BABYLON.Color4(0.1,0.1, 0.1, 0.001);
     particleSystemx.colorDead = new BABYLON.Color4(0, 0, 0.2, 0.0);
-	particleSystemz.color1 = new BABYLON.Color4(0.7, 0.8, 1.0, 0.01);
-    particleSystemz.color2 = new BABYLON.Color4(0.2, 0.5, 1.0, 0.01);
+	particleSystemz.color1 = new BABYLON.Color4(0.7, 0.8, 1.0, 0.001);
+    particleSystemz.color2 = new BABYLON.Color4(0.2, 0.5, 1.0, 0.001);
     particleSystemz.colorDead = new BABYLON.Color4(0, 0, 0.2, 0.0);
 	//particleSystem.startDirectionFunction(3, BABYLON.Matrix, BABYLON.Vector3);
 
