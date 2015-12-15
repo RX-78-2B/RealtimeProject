@@ -1032,9 +1032,16 @@
 	wpath.position.x=0;
 	wpath.position.z= -125;
 	wpath.material = wt;
+	var gold = new BABYLON.StandardMaterial("gold", scene);
+    gold.diffuseColor = new BABYLON.Color3(1.0, 0.836, 0.386);
+    gold.reflectionTexture = new BABYLON.MirrorTexture("goldmr", 512, scene, true); //Create a mirror texture
+    gold.reflectionTexture.mirrorPlane = new BABYLON.Plane(0, -1.0, 0, -10.0);
+    gold.reflectionTexture.renderList = [skybox];
+    gold.reflectionTexture.level = 0.6;
 	var cwpath = BABYLON.Mesh.CreateTorus("ft", 85, 1, 4, scene);
-		cwpath.position = new BABYLON.Vector3(0, -5, -125);
-		cwpath.rotation = new BABYLON.Vector3( 0, Math.PI /4, 0);
+	cwpath.position = new BABYLON.Vector3(0, -5, -125);
+	cwpath.rotation = new BABYLON.Vector3( 0, Math.PI /4, 0);
+	cwpath.material=gold;
 	
 	
 	//----end fountain path obj---//
