@@ -156,7 +156,7 @@
 			plane.material = grass;
             
             //Ground
-            /*var plane = BABYLON.Mesh.CreateGround("plane", 500, 500, 1, scene, false);
+            var plane = BABYLON.Mesh.CreateGround("plane", 500, 500, 1, scene, false);
             plane.position.y = -6;
             //Creation of a repeated textured material
             var materialPlane = new BABYLON.StandardMaterial("texturePlane", scene);
@@ -165,7 +165,7 @@
             materialPlane.diffuseTexture.vScale = 50.0;//Repeat 50 times on the Horizontal Axes
             //materialPlane.backFaceCulling = false;//Always show the front and the back of an element
 			//plane.renderingGroupId = 1;
-			plane.material = materialPlane;*/
+			plane.material = materialPlane;
 			
             //Sky&Fog
             var skybox = BABYLON.Mesh.CreateBox("skyBox", 500.0, scene);
