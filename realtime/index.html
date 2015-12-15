@@ -717,25 +717,24 @@
 		ftex.numberOfBricksHeight = 5;
 		ftex.numberOfBricksWidth = 5;
 		ftex.ambientTexture = marbleTexture;*/
-		 var ft = BABYLON.Mesh.CreateTorus("ft", 35, 4, 6, scene);
-			ft.position = new BABYLON.Vector3(-100, -5, -100);
-			//ft.material = marbleMaterial;
+		var ft = BABYLON.Mesh.CreateTorus("ft", 35, 4, 6, scene);
+		ft.position = new BABYLON.Vector3(-100, -5, -100);
+		//ft.material = marbleMaterial;
 		var fg = BABYLON.Mesh.CreateCylinder("cylinder", 0.01, 35, 35, 6, 1, scene, false);
-				fg.position = new BABYLON.Vector3(-100, -5, -100);
-				fg.rotation
-				fg.rotation = new BABYLON.Vector3( 0, Math.PI /2, 0);
-				var wt =  new WaterMaterial("wt", scene, light);
-	wt.bumpTexture = new BABYLON.Texture("textures/waterbump.png", scene);
-	wt.windForce = -10;
-	wt.waveHeight = 0.5;
-	wt.windDirection = new BABYLON.Vector2(-0.5, 1);
-	wt.waterColor = new BABYLON.Color3(0.6, 0.6, 0.9);
-	wt.colorBlendFactor = 0.8;
-	wt.bumpHeight = 0.1;
-	wt.waveLength = 0.1;
-	wt.reflectionTexture.renderList.push(plane);				
-	wt.reflectionTexture.renderList.push(skybox);
-	fg.material=wt;
+		fg.position = new BABYLON.Vector3(-100, -5, -100);
+		fg.rotation = new BABYLON.Vector3( 0, Math.PI /2, 0);
+		var wt =  new WaterMaterial("wt", scene, light);
+		wt.bumpTexture = new BABYLON.Texture("textures/waterbump.png", scene);
+		wt.windForce = -10;
+		wt.waveHeight = 0.5;
+		wt.windDirection = new BABYLON.Vector2(-0.5, 1);
+		wt.waterColor = new BABYLON.Color3(0.6, 0.6, 0.9);
+		wt.colorBlendFactor = 0.8;
+		wt.bumpHeight = 0.1;
+		wt.waveLength = 0.1;
+		wt.reflectionTexture.renderList.push(plane);				
+		wt.reflectionTexture.renderList.push(skybox);
+		fg.material=wt;
         //fontainGround.material = marbleMaterial;
 	//----fountaineffect----//
 		var fountain = BABYLON.Mesh.CreateBox("fountain",0.1,scene);
@@ -828,12 +827,12 @@
 	//-----fountain effect end-----//
 		
 	//----fountain path----//
-		var p1 = new BABYLON.Vector3(-100, -5, -20);
-		var p2 = new BABYLON.Vector3(-110, -5, 20);
-		var p3 = new BABYLON.Vector3(-120, -5, -20);
-		var p4 = new BABYLON.Vector3(-130, -5, 20);
-		var p5 = new BABYLON.Vector3(-140, -5, -20);
-		var p6 = new BABYLON.Vector3(-150, -5, 20);
+		var p1 = new BABYLON.Vector3(20, -5, -100);
+		var p2 = new BABYLON.Vector3(-20, -5, -110);
+		var p3 = new BABYLON.Vector3(20, -5, -120);
+		var p4 = new BABYLON.Vector3(-20, -5, -130);
+		var p5 = new BABYLON.Vector3(20, -5, -140);
+		var p6 = new BABYLON.Vector3(-20, -5, -150);
 		// Create a particle system
 		var a1 = new BABYLON.ParticleSystem("particles", 2000, scene);
 		var a2	= new BABYLON.ParticleSystem("particles", 2000, scene);
@@ -926,18 +925,18 @@
 		a6.gravity = new BABYLON.Vector3(0, -9.81, 0);
 			
 		// Direction of each particle after it has been emitted
-		a1.direction1 = new BABYLON.Vector3(0, 12, 3.5);
-		a1.direction2 = new BABYLON.Vector3(0, 12, 3.5);
-		a2.direction1 = new BABYLON.Vector3(0, 12, -3.5);
-		a2.direction2 = new BABYLON.Vector3(0, 12, -3.5);
-		a3.direction1 = new BABYLON.Vector3(0, 12, 3.5);
-		a3.direction2 = new BABYLON.Vector3(0, 12, 3.5);
-		a4.direction1 = new BABYLON.Vector3(0, 12, -3.5);
-		a4.direction2 = new BABYLON.Vector3(0, 12, -3.5);
-		a5.direction1 = new BABYLON.Vector3(0, 12, 3.5);
-		a5.direction2 = new BABYLON.Vector3(0, 12, 3.5);
-		a6.direction1 = new BABYLON.Vector3(0, 12, -3.5);
-		a6.direction2 = new BABYLON.Vector3(0, 12, -3.5);
+		a1.direction1 = new BABYLON.Vector3(-3.5, 12, 0);
+		a1.direction2 = new BABYLON.Vector3(-3.5, 12, 0);
+		a2.direction1 = new BABYLON.Vector3(3.5, 12, 0);
+		a2.direction2 = new BABYLON.Vector3(3.5, 12, 0);
+		a3.direction1 = new BABYLON.Vector3(-3.5, 12, 0);
+		a3.direction2 = new BABYLON.Vector3(-3.5, 12, 0);
+		a4.direction1 = new BABYLON.Vector3(3.5, 12, 0);
+		a4.direction2 = new BABYLON.Vector3(3.5, 12, 0);
+		a5.direction1 = new BABYLON.Vector3(-3.5, 12, 0);
+		a5.direction2 = new BABYLON.Vector3(-3.5, 12, 0);
+		a6.direction1 = new BABYLON.Vector3(3.5, 12, 0);
+		a6.direction2 = new BABYLON.Vector3(3.5, 12, 0);
 	
 		// Angular speed, in radians
 		a1.minAngularSpeed = 1;
@@ -982,44 +981,47 @@
 		a6.start();
 	//---- fountain path end----//
 	//---- fountain path obj---//
-	var path1 = BABYLON.Mesh.CreatePlane("path1", 20, scene);
-    path1.position.y = -4.5;
-	path1.position.x=-100;
-	path1.position.z= 0;
-	path1.rotation = new BABYLON.Vector3(Math.PI / 2, 0, 0);
-	 var pathmirror = new BABYLON.StandardMaterial("pathmiror", scene);
-    pathmirror.diffuseColor = new BABYLON.Color3(0.9, 0.9, 0.9);
-    pathmirror.reflectionTexture = new BABYLON.MirrorTexture("mirror", 512, scene, true);
-    pathmirror.reflectionTexture.mirrorPlane = new BABYLON.Plane(0, -1.0, 0, -10.0);
-    //pathmiror.reflectionTexture.renderList = [plane,skybox];
-    pathmirror.reflectionTexture.level = 0.9;
-	/*var window = BABYLON.Mesh.CreatePlane("mirror", 20, scene);
-				window.rotate(BABYLON.Axis.X, 3.14, BABYLON.Space.LOCAL);
-				window.position.x -=20;
-				window.position.y +=6;
-				window.position.z -=15;
-			windowMaterial  = mirrorMaterial.clone("window");
-			windowMaterial.reflectionTexture.mirrorPlane = new BABYLON.Plane(0, 0, 0.0, -10.0);
-			window.material = windowMaterial;*/
-	path1.material=windowMaterial;
-	var path2 = BABYLON.Mesh.CreatePlane("path1", 20, scene);
-    path2.position.y = -4.5;
-	path2.position.x=-120;
-	path2.position.z= 0;
-	path2.rotation = new BABYLON.Vector3(Math.PI / 2, 0, 0);
-	path2.material=windowMaterial;
-	var path3 = BABYLON.Mesh.CreatePlane("path2", 20, scene);
-	path3.position.y = -4.5;
-	path3.position.x=-140;
-	path3.position.z= 0;
-	path3.rotation = new BABYLON.Vector3(Math.PI / 2, 0, 0);
-	path3.material=windowMaterial;
-	var path4 = BABYLON.Mesh.CreatePlane("path3", 20, scene);
-	path4.position.y = -4.5;
-	path4.position.x=-160;
-	path4.position.z= 0;
-	path4.rotation = new BABYLON.Vector3(Math.PI / 2, 0, 0);
-	path4.material=windowMaterial;
+	//var path1 = BABYLON.Mesh.CreatePlane("path1", 20, scene);
+    var path1 = BABYLON.Mesh.CreateCylinder("cylinder", 2.5, 30, 1, 4, 1, scene, false);
+		path1.position = new BABYLON.Vector3(0, -4.5, -100);
+	//path1.position.y = -4.5;
+	//path1.position.x=0;
+	//path1.position.z= -100;
+	path1.rotation = new BABYLON.Vector3(0,Math.PI / 4, 0);
+	pw1 = mirrorMaterial.clone("window");
+	pw1.reflectionTexture.mirrorPlane = new BABYLON.Plane(0, 0, 0.0, -10.0);
+	pw1.color1 = new BABYLON.Color4(255,215,0,0.1)
+	path1.material=pw1;
+	//var path2 = BABYLON.Mesh.CreatePlane("path1", 20, scene);
+    var path2 = BABYLON.Mesh.CreateCylinder("cylinder", 2.5, 30, 1, 4, 1, scene, false);
+		path2.position = new BABYLON.Vector3(0, -4.5, -120);
+	//path2.position.y = -4.5;
+	//path2.position.x=0;
+	//path2.position.z= -120;
+	path2.rotation = new BABYLON.Vector3(0,Math.PI / 4, 0);
+	pw2 = mirrorMaterial.clone("window");
+	pw2.reflectionTexture.mirrorPlane = new BABYLON.Plane(0, 0, 0.0, -10.0);
+	path2.material=pw2;
+	//var path3 = BABYLON.Mesh.CreatePlane("path2", 20, scene);
+	var path3 = BABYLON.Mesh.CreateCylinder("cylinder", 2.5, 30, 1, 4, 1, scene, false);
+		path3.position = new BABYLON.Vector3(0, -4.5, -140);
+	//path3.position.y = -4.5;
+	//path3.position.x=0;
+	//path3.position.z= -140;
+	path3.rotation = new BABYLON.Vector3(0,Math.PI / 4, 0);
+	pw3 = mirrorMaterial.clone("window");
+	pw3.reflectionTexture.mirrorPlane = new BABYLON.Plane(0, 0, 0.0, -10.0);
+	path3.material=pw3;
+	//var path4 = BABYLON.Mesh.CreatePlane("path3", 20, scene);
+	var path4 = BABYLON.Mesh.CreateCylinder("cylinder", 2.5, 30, 1, 4, 1, scene, false);
+		path4.position = new BABYLON.Vector3(0, -4.5, -160);
+		path4.rotation = new BABYLON.Vector3( 0, Math.PI /4, 0);
+	//path4.position.y = -4.5;
+	//path4.position.x=0;
+	//path4.position.z= -160;
+	pw4 = mirrorMaterial.clone("window");
+	pw4.reflectionTexture.mirrorPlane = new BABYLON.Plane(0, 0, 0.0, -10.0);
+	path4.material=mirrorMaterial;
 	/*var wpath = BABYLON.Mesh.CreatePlane("wpat4", 60, scene);
 	wpath.position.y = -5;
 	wpath.position.x=-125;
@@ -1027,10 +1029,10 @@
 	wpath.rotation = new BABYLON.Vector3(Math.PI / 2, 0, 0);*/
 	var wpath = BABYLON.Mesh.CreateGround("wpath", 60, 60, 32, scene, false);
 	wpath.position.y = -5;
-	wpath.position.x=-125;
-	wpath.position.z= 0;
+	wpath.position.x=0;
+	wpath.position.z= -125;
 	
-	wpath.material = wt;
+	wpath.material = pw4;
 	//----end fountain path obj---//
 		return scene;
 
