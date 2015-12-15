@@ -68,7 +68,7 @@
 		 
 			// Light
 			vec3 lightVectorW = normalize(vLightPosition - vPositionW);
-		 
+		  
 			// Wave
 			vec3 bumpNormal = 2.0 * texture2D(bumpSampler, vBumpUV).rgb - 1.0;
 			vec2 perturbation = waveData.y * bumpNormal.rg;
