@@ -140,7 +140,7 @@
             var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 0, 0), scene);
             camera.attachControl(canvas, true);
 			camera.checkCollisions = true;
-			camera.position=new BABYLON.Vector3(0, 1, -20);
+			camera.position=new BABYLON.Vector3(0, 1, -70);
             camera.rotation=new BABYLON.Vector3(0,0,0);
         
             //Ground
@@ -502,7 +502,7 @@
 		particleSystem.particleTexture = new BABYLON.Texture("textures/flare.png", scene);
 
 		// Where the particles come from
-		particleSystem.emitter =  new BABYLON.Vector3(0, 50, 0);; // the starting object, the emitter
+		particleSystem.emitter =  new BABYLON.Vector3(0, 80, 0);; // the starting object, the emitter
 		particleSystem.minEmitBox = new BABYLON.Vector3(-100, 0, -100); // Starting all from
 		particleSystem.maxEmitBox = new BABYLON.Vector3(100, 5, 100); // To...
 
@@ -711,10 +711,35 @@
 			windowMaterial.reflectionTexture.mirrorPlane = new BABYLON.Plane(0, 0, 0.0, -10.0);
 			window.material = windowMaterial;
 			//------------
-		
+	//----fountainobj----//
+		/*var ftex = new BABYLON.StandardMaterial("ftex", scene);
+		var ftex = new BABYLON.MarbleProceduralTexture("ftex", 512, scene);
+		ftex.numberOfBricksHeight = 5;
+		ftex.numberOfBricksWidth = 5;
+		ftex.ambientTexture = marbleTexture;*/
+		 var ft = BABYLON.Mesh.CreateTorus("ft", 35, 4, 6, scene);
+			ft.position = new BABYLON.Vector3(-100, -5, -100);
+			//ft.material = marbleMaterial;
+		var fg = BABYLON.Mesh.CreateCylinder("cylinder", 0.01, 35, 35, 6, 1, scene, false);
+				fg.position = new BABYLON.Vector3(-100, -5, -100);
+				fg.rotation
+				fg.rotation = new BABYLON.Vector3( 0, Math.PI /2, 0);
+				var wt =  new WaterMaterial("wt", scene, light);
+	wt.bumpTexture = new BABYLON.Texture("textures/waterbump.png", scene);
+	wt.windForce = -10;
+	wt.waveHeight = 0.5;
+	wt.windDirection = new BABYLON.Vector2(-0.5, 1);
+	wt.waterColor = new BABYLON.Color3(0.6, 0.6, 0.9);
+	wt.colorBlendFactor = 0.8;
+	wt.bumpHeight = 0.1;
+	wt.waveLength = 0.1;
+	wt.reflectionTexture.renderList.push(plane);				
+	wt.reflectionTexture.renderList.push(skybox);
+	fg.material=wt;
+        //fontainGround.material = marbleMaterial;
 	//----fountaineffect----//
 		var fountain = BABYLON.Mesh.CreateBox("fountain",0.1,scene);
-		fountain.position=new BABYLON.Vector3(-100,15,-100);
+		fountain.position=new BABYLON.Vector3(-100,-5,-100);
 		var particleSystemx = new BABYLON.ParticleSystem("particles", 4000, scene);
 		var particleSystemz = new BABYLON.ParticleSystem("particles", 4000, scene);
 
@@ -728,11 +753,11 @@
 		particleSystemz.minEmitBox = new BABYLON.Vector3(0, 1, 0);
 		particleSystemz.maxEmitBox = new BABYLON.Vector3(0, 1, 0);
 		
-		particleSystemx.color1 = new BABYLON.Color4(0.1, 0.1, 0.1,0.0001);
-		particleSystemx.color2 = new BABYLON.Color4(0.1,0.1, 0.1, 0.0001);
+		particleSystemx.color1 = new BABYLON.Color4(0.1, 0.1, 0.1,0.001);
+		particleSystemx.color2 = new BABYLON.Color4(0.1,0.1, 0.1, 0.001);
 		particleSystemx.colorDead = new BABYLON.Color4(0.1, 0.1, 0.1, 0.0);
-		particleSystemz.color1 = new BABYLON.Color4(0.1, 0.1, 0.1, 0.0001);
-		particleSystemz.color2 = new BABYLON.Color4(0.1, 0.1, 0.1, 0.0001);
+		particleSystemz.color1 = new BABYLON.Color4(0.1, 0.1, 0.1, 0.001);
+		particleSystemz.color2 = new BABYLON.Color4(0.1, 0.1, 0.1, 0.001);
 		particleSystemz.colorDead = new BABYLON.Color4(0.1, 0.1, 0.1, 0.0);
 
 		particleSystemx.minSize = 0.1;
@@ -741,12 +766,12 @@
 		particleSystemz.maxSize = 1;
 
 		particleSystemx.minLifeTime = 0.3;
-		particleSystemx.maxLifeTime = 5.0;
+		particleSystemx.maxLifeTime =10.0;
 		particleSystemz.minLifeTime = 0.3;
-		particleSystemz.maxLifeTime = 5.0;
+		particleSystemz.maxLifeTime = 10.0;
 
-		particleSystemx.emitRate = 3500;
-		particleSystemz.emitRate = 3500;
+		particleSystemx.emitRate = 3000;
+		particleSystemz.emitRate = 3000;
 
 		particleSystemx.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
 		particleSystemz.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
@@ -754,22 +779,22 @@
 		particleSystemx.gravity = new BABYLON.Vector3(0, -19.81, 0);
 		particleSystemz.gravity = new BABYLON.Vector3(0, -19.81, 0);
    
-		particleSystemx.direction1 = new BABYLON.Vector3(2, 6, 0);
-		particleSystemx.direction2 = new BABYLON.Vector3(-2, 6, 0);
-		particleSystemz.direction1 = new BABYLON.Vector3(0,6, 2);
-		particleSystemz.direction2 = new BABYLON.Vector3(0, 6, -2);
+		particleSystemx.direction1 = new BABYLON.Vector3(3,10, 0);
+		particleSystemx.direction2 = new BABYLON.Vector3(-3, 10, 0);
+		particleSystemz.direction1 = new BABYLON.Vector3(0,10, 3);
+		particleSystemz.direction2 = new BABYLON.Vector3(0, 10, -3);
 
 		particleSystemx.minAngularSpeed = 1;
 		particleSystemx.maxAngularSpeed = Math.PI;
 		particleSystemz.minAngularSpeed = 1;
 		particleSystemz.maxAngularSpeed = Math.PI;
 
-		particleSystemx.minEmitPower = 2;
-		particleSystemx.maxEmitPower = 3;
-		particleSystemx.updateSpeed = 0.005;
-		particleSystemz.minEmitPower = 2;
-		particleSystemz.maxEmitPower = 3;
-		particleSystemz.updateSpeed = 0.005;
+		particleSystemx.minEmitPower = 2.25;
+		particleSystemx.maxEmitPower = 2.5;
+		particleSystemx.updateSpeed = 0.03;
+		particleSystemz.minEmitPower = 2.25;
+		particleSystemz.maxEmitPower = 2.5;
+		particleSystemz.updateSpeed = 0.03;
 
 		particleSystemx.start();
 		particleSystemz.start();
@@ -1004,17 +1029,7 @@
 	wpath.position.y = -5;
 	wpath.position.x=-125;
 	wpath.position.z= 0;
-	var wt =  new WaterMaterial("wt", scene, light);
-	wt.bumpTexture = new BABYLON.Texture("textures/waterbump.png", scene);
-	wt.windForce = -2;
-	wt.waveHeight = 0.8;
-	wt.windDirection = new BABYLON.Vector2(1, -1);
-	wt.waterColor = new BABYLON.Color3(0.6, 0.6, 0.9);
-	wt.colorBlendFactor = 0.8;
-	wt.bumpHeight = 0.1;
-	wt.waveLength = 0.1;
-	wt.reflectionTexture.renderList.push(plane);				
-	wt.reflectionTexture.renderList.push(skybox);
+	
 	wpath.material = wt;
 	//----end fountain path obj---//
 		return scene;
