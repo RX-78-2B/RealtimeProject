@@ -958,7 +958,7 @@
 	//---- fountain path end----//
 	//---- fountain path obj---//
 	var path1 = BABYLON.Mesh.CreatePlane("path1", 20, scene);
-    path1.position.y = -5;
+    path1.position.y = -4.5;
 	path1.position.x=-100;
 	path1.position.z= 0;
 	path1.rotation = new BABYLON.Vector3(Math.PI / 2, 0, 0);
@@ -978,23 +978,44 @@
 			window.material = windowMaterial;*/
 	path1.material=windowMaterial;
 	var path2 = BABYLON.Mesh.CreatePlane("path1", 20, scene);
-    path2.position.y = -5;
+    path2.position.y = -4.5;
 	path2.position.x=-120;
 	path2.position.z= 0;
 	path2.rotation = new BABYLON.Vector3(Math.PI / 2, 0, 0);
 	path2.material=windowMaterial;
-	var path3 = BABYLON.Mesh.CreatePlane("path1", 20, scene);
-	path3.position.y = -5;
+	var path3 = BABYLON.Mesh.CreatePlane("path2", 20, scene);
+	path3.position.y = -4.5;
 	path3.position.x=-140;
 	path3.position.z= 0;
 	path3.rotation = new BABYLON.Vector3(Math.PI / 2, 0, 0);
 	path3.material=windowMaterial;
-	var path4 = BABYLON.Mesh.CreatePlane("path1", 20, scene);
-	path4.position.y = -5;
+	var path4 = BABYLON.Mesh.CreatePlane("path3", 20, scene);
+	path4.position.y = -4.5;
 	path4.position.x=-160;
 	path4.position.z= 0;
 	path4.rotation = new BABYLON.Vector3(Math.PI / 2, 0, 0);
 	path4.material=windowMaterial;
+	/*var wpath = BABYLON.Mesh.CreatePlane("wpat4", 60, scene);
+	wpath.position.y = -5;
+	wpath.position.x=-125;
+	wpath.position.z= 0;
+	wpath.rotation = new BABYLON.Vector3(Math.PI / 2, 0, 0);*/
+	var wpath = BABYLON.Mesh.CreateGround("wpath", 60, 60, 32, scene, false);
+	wpath.position.y = -5;
+	wpath.position.x=-125;
+	wpath.position.z= 0;
+	var wt =  new WaterMaterial("wt", scene, light);
+	wt.bumpTexture = new BABYLON.Texture("textures/waterbump.png", scene);
+	wt.windForce = -2;
+	wt.waveHeight = 0.8;
+	wt.windDirection = new BABYLON.Vector2(1, -1);
+	wt.waterColor = new BABYLON.Color3(0.6, 0.6, 0.9);
+	wt.colorBlendFactor = 0.8;
+	wt.bumpHeight = 0.1;
+	wt.waveLength = 0.1;
+	wt.reflectionTexture.renderList.push(plane);				
+	wt.reflectionTexture.renderList.push(skybox);
+	wpath.material = wt;
 	//----end fountain path obj---//
 		return scene;
 
