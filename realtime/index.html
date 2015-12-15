@@ -156,7 +156,7 @@
 			plane.material = grass;
             
             //Ground
-            /*var plane = BABYLON.Mesh.CreateGround("plane", 500, 500, 1, scene, false);
+            var plane = BABYLON.Mesh.CreateGround("plane", 500, 500, 1, scene, false);
             plane.position.y = -6;
             //Creation of a repeated textured material
             var materialPlane = new BABYLON.StandardMaterial("texturePlane", scene);
@@ -165,7 +165,7 @@
             materialPlane.diffuseTexture.vScale = 50.0;//Repeat 50 times on the Horizontal Axes
             //materialPlane.backFaceCulling = false;//Always show the front and the back of an element
 			//plane.renderingGroupId = 1;
-			plane.material = materialPlane;*/
+			plane.material = materialPlane;
 			
             //Sky&Fog
             var skybox = BABYLON.Mesh.CreateBox("skyBox", 500.0, scene);
@@ -194,8 +194,8 @@
 			var water = BABYLON.Mesh.CreateGround("water", 34, 38, 1, scene, false);	
 			var waterMaterial = new WaterMaterial("water", scene, light);			 
 			  water.position.x=125;
-			 // water.position.z=25;
-			   water.position.y=4.75-3;
+			  	water.position.z=2;
+			   water.position.y=4.75-4;
 			
 			 //-----------
 			//---------Loading Object
@@ -215,8 +215,8 @@
 			// Set the target of the camera to the first imported mesh
 			  waterMaterial.reflectionTexture.renderList.push(newMeshes[0]);
 			  newMeshes[0].position.x=100;
-			  //newMeshes[0].position.z=100;
-			  newMeshes[0].position.y=0-2.5;
+			  //newMeshes[0].position.z=0;
+			  newMeshes[0].position.y=0-4.5;	
 			 // newMeshes[0].renderingGroupId = 2;
 				});		
 				/*var fountainob = BABYLON.SceneLoader.ImportMesh("", "", "fountain.babylon", scene, function (newMeshes) {
