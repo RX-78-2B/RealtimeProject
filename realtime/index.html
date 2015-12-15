@@ -957,17 +957,45 @@
 		a6.start();
 	//---- fountain path end----//
 	//---- fountain path obj---//
-	/*var pathin = BABYLON.Mesh.CreatePlane("pathin", 70, scene);
-    pathin.position.y = -5;
-	pathin.position.x=100;
-	pathin.position.z=-100;
+	var path1 = BABYLON.Mesh.CreatePlane("path1", 20, scene);
+    path1.position.y = -5;
+	path1.position.x=-100;
+	path1.position.z= 0;
+	path1.rotation = new BABYLON.Vector3(Math.PI / 2, 0, 0);
 	 var pathmirror = new BABYLON.StandardMaterial("pathmiror", scene);
-    pathmirror.diffuseColor = new BABYLON.Color3(0.4, 0.4, 0.4);
+    pathmirror.diffuseColor = new BABYLON.Color3(0.9, 0.9, 0.9);
     pathmirror.reflectionTexture = new BABYLON.MirrorTexture("mirror", 512, scene, true);
     pathmirror.reflectionTexture.mirrorPlane = new BABYLON.Plane(0, -1.0, 0, -10.0);
-    //pathmiror.reflectionTexture.renderList = [skyBox];
-    pathmirror.reflectionTexture.level = 0.6;
-	pathin.material=pathmirror;*/
+    //pathmiror.reflectionTexture.renderList = [plane,skybox];
+    pathmirror.reflectionTexture.level = 0.9;
+	/*var window = BABYLON.Mesh.CreatePlane("mirror", 20, scene);
+				window.rotate(BABYLON.Axis.X, 3.14, BABYLON.Space.LOCAL);
+				window.position.x -=20;
+				window.position.y +=6;
+				window.position.z -=15;
+			windowMaterial  = mirrorMaterial.clone("window");
+			windowMaterial.reflectionTexture.mirrorPlane = new BABYLON.Plane(0, 0, 0.0, -10.0);
+			window.material = windowMaterial;*/
+	path1.material=windowMaterial;
+	var path2 = BABYLON.Mesh.CreatePlane("path1", 20, scene);
+    path2.position.y = -5;
+	path2.position.x=-120;
+	path2.position.z= 0;
+	path2.rotation = new BABYLON.Vector3(Math.PI / 2, 0, 0);
+	path2.material=windowMaterial;
+	var path3 = BABYLON.Mesh.CreatePlane("path1", 20, scene);
+	path3.position.y = -5;
+	path3.position.x=-140;
+	path3.position.z= 0;
+	path3.rotation = new BABYLON.Vector3(Math.PI / 2, 0, 0);
+	path3.material=windowMaterial;
+	var path4 = BABYLON.Mesh.CreatePlane("path1", 20, scene);
+	path4.position.y = -5;
+	path4.position.x=-160;
+	path4.position.z= 0;
+	path4.rotation = new BABYLON.Vector3(Math.PI / 2, 0, 0);
+	path4.material=windowMaterial;
+	//----end fountain path obj---//
 		return scene;
 
         };
