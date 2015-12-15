@@ -136,10 +136,10 @@
             //var light = new BABYLON.DirectionalLight("dir01", new BABYLON.Vector3(0.5, -1, -0.5), scene);
         	var  light = new BABYLON.PointLight("dir01", new BABYLON.Vector3(60, 100, 10), scene);
             //Create an Arc Rotate Camera - aimed negative z this time
-            var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 0, 0), scene);
+            var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0,7, 0), scene);
             camera.attachControl(canvas, true);
 			camera.checkCollisions = true;
-			camera.position=new BABYLON.Vector3(0, 1, -70);
+			camera.position=new BABYLON.Vector3(0, 3, -70);
             camera.rotation=new BABYLON.Vector3(0,0,0);
         
             //Fong ☺ Film
@@ -181,8 +181,8 @@
 			//skybox.renderingGroupId = 0;
 			scene.registerBeforeRender(function () {
 				skybox.rotation.y += 0.0001;	
-				if(camera.position.y <0) camera.position.y =0;
-				//if(camera.position.y >0) camera.position.y =0;
+				if(camera.position.y <7) camera.position.y =7;
+				if(camera.position.y >7) camera.position.y =7;
 				if(camera.rotation.x <-Math.PI/3) camera.rotation.x =-Math.PI/3;
 				if(camera.rotation.x >Math.PI/3) camera.rotation.x =Math.PI/3;
 				});
@@ -195,7 +195,7 @@
 			var waterMaterial = new WaterMaterial("water", scene, light);			 
 			  water.position.x=125;
 			  	water.position.z=2;
-			   water.position.y=4.75-3.5;
+			   water.position.y=4.75-3.75;
 			
 			 //-----------
 		
@@ -217,7 +217,7 @@
 			  waterMaterial.reflectionTexture.renderList.push(newMeshes[0]);
 			  newMeshes[0].position.x=100;
 			  
-			  newMeshes[0].position.y=0-2.5;
+			  newMeshes[0].position.y=0-3.75;
 			 // newMeshes[0].renderingGroupId = 2;
 				});		
 				/*var fountainob = BABYLON.SceneLoader.ImportMesh("", "", "fountain.babylon", scene, function (newMeshes) {
@@ -546,7 +546,9 @@
            var particle = particles[index];
            particle.age += this._scaledUpdateSpeed;
 			
-           if (particle.age >= particle.lifeTime || particle.position.y<plane.position.y+1) { // Recycle
+           if (particle.age >= particle.lifeTime || particle.position.y<plane.position.y+1
+			|| (particle.position.x>-50 &&particle.position.x<50 &&particle.position.z>-50 &&particle.position.z<50 &&particle.position.y<70)
+		   ) { // Recycle
                 particles.splice(index, 1);
                 this._stockParticles.push(particle);
                 index--;
@@ -636,29 +638,11 @@
 			// Start the particle system
 			fireSystem.start();
 			//------------
-			//Ground
-			// Window ---------------
-            /*var window =    BABYLON.Mesh.CreatePlane("window", 10, scene);
-			var windowMaterial = new BABYLON.StandardMaterial("windowTexture", scene);
-			windowMaterial.diffuseColor = new BABYLON.Color3(1, 0.6, 0.4);
-			windowMaterial.reflectionTexture = new BABYLON.MirrorTexture("window", 512, scene, true); //Create a mirror texture
-			windowMaterial.reflectionTexture.mirrorPlane = new BABYLON.Plane(0, 0.0,0.0, -10.0);
-			//windowMaterial.reflectionTexture.mirrorPlane = scene.getMeshByID("plane");
-			windowMaterial.reflectionTexture.renderList = [plane,skybox];
-			windowMaterial.reflectionTexture.level = 0.6;//Select the level (0.0 > 1.0) of the reflection
-			 window.position.z = 50;
-             window.position.y = -1;
-            // window.rotation.x = -Math.PI/2;
-			 window.material = windowMaterial;*/
-			// -----------------------
-			// Mirror
     // Mirror
 	
     // MATERIALS
-		var simpleMaterial = new BABYLON.StandardMaterial("texture2", scene);
-		simpleMaterial.diffuseColor = new BABYLON.Color3(1, 0, 0);//Red
 		//Creation of a mirror material Vertical
-		var mirrorMaterial = new BABYLON.StandardMaterial("texture4", scene);
+		/*var mirrorMaterial = new BABYLON.StandardMaterial("texture4", scene);
 		mirrorMaterial.diffuseColor = new BABYLON.Color3(0.4, 0.4, 0.4);
 		mirrorMaterial.reflectionTexture = new BABYLON.MirrorTexture("mirror", 512, scene, true); //Create a mirror texture
 		mirrorMaterial.reflectionTexture.mirrorPlane = new BABYLON.Plane(0, 0, -1.0, -10.0);
@@ -679,7 +663,7 @@
 				window.position.z -=15;
 			windowMaterial  = mirrorMaterial.clone("window");
 			windowMaterial.reflectionTexture.mirrorPlane = new BABYLON.Plane(0, 0, 0.0, -10.0);
-			window.material = windowMaterial;
+			window.material = windowMaterial;*/
 			//------------
 	//----fountainobj----//
 		/*var ftex = new BABYLON.StandardMaterial("ftex", scene);
