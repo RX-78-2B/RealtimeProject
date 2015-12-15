@@ -136,7 +136,6 @@
             //Create a light
             //var light = new BABYLON.DirectionalLight("dir01", new BABYLON.Vector3(0.5, -1, -0.5), scene);
         	var  light = new BABYLON.PointLight("dir01", new BABYLON.Vector3(60, 100, 10), scene);
-			var shadowGenerator = new BABYLON.ShadowGenerator(1024, light);
             //Create an Arc Rotate Camera - aimed negative z this time
             var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 0, 0), scene);
             camera.attachControl(canvas, true);
@@ -145,7 +144,7 @@
             camera.rotation=new BABYLON.Vector3(0,0,0);
         
             //Ground
-            var plane = BABYLON.Mesh.CreateGround("plane", 500, 500, 1, scene, true);
+            var plane = BABYLON.Mesh.CreateGround("plane", 500, 500, 1, scene, false);
             plane.position.y = -6;
             //Creation of a repeated textured material
             var materialPlane = new BABYLON.StandardMaterial("texturePlane", scene);
@@ -155,7 +154,7 @@
             //materialPlane.backFaceCulling = false;//Always show the front and the back of an element
 			//plane.renderingGroupId = 1;
 			plane.material = materialPlane;
-			plane.receiveShadows = true;
+			
             //Sky&Fog
             var skybox = BABYLON.Mesh.CreateBox("skyBox", 500.0, scene);
 			var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
@@ -188,20 +187,7 @@
 			
 			 //-----------
 			//---------Loading Object
-			  var ghost =BABYLON.SceneLoader.ImportMesh("", "", "ghost.babylon", scene, function (newMeshes) {
-			// Set the target of the camera to the first imported mesh
-			newMeshes[0].position.z=-20;
-			 newMeshes[0].position.y=-6;
-			  newMeshes[0].position.x=40;
-			 newMeshes[0].checkCollisions=true;
-			  newMeshes[0].scaling.x=0.25;
-			  newMeshes[0].scaling.y=0.25;
-			   newMeshes[0].scaling.z=0.25;
-			   newMeshes[0].rotation.y+=-1.7;
-				 shadowGenerator.getShadowMap().renderList.push(newMeshes[0]);
-			   });	
-				shadowGenerator.useVarianceShadowMap = true;
-			var campfire= BABYLON.SceneLoader.ImportMesh("", "", "campfire.babylon", scene, function (newMeshes) {
+			 BABYLON.SceneLoader.ImportMesh("", "", "campfire.babylon", scene, function (newMeshes) {
 			// Set the target of the camera to the first imported mesh
 			newMeshes[0].position.z=20;
 			 newMeshes[0].position.y=-6;
@@ -211,31 +197,7 @@
 			   newMeshes[0].scaling.z=2;
 			 //newMeshes[0].renderingGroupId = 2;
 				});		
-			 /* BABYLON.SceneLoader.ImportMesh("", "", "dogoo2.babylon", scene, function (newMeshes) {
-			// Set the target of the camera to the first imported mesh
-			newMeshes[0].position.x=-20;
-			newMeshes[0].position.z=0;
-			 newMeshes[0].position.y=-5;
-			 newMeshes[0].checkCollisions=true;
-			 //newMeshes[0].renderingGroupId = 2;
-				});	*/	
-			  BABYLON.SceneLoader.ImportMesh("", "", "dogoo.babylon", scene, function (newMeshes) {
-			// Set the target of the camera to the first imported mesh
-			newMeshes[0].position.x=20;
-			newMeshes[0].position.z=0;
-			 newMeshes[0].position.y=-5;
-			 newMeshes[0].checkCollisions=true;
-			// newMeshes[0].renderingGroupId = 2;
-				});	
-					BABYLON.SceneLoader.ImportMesh("", "", "dogoo3.babylon", scene, function (newMeshes) {
-			// Set the target of the camera to the first imported mesh
-			 // waterMaterial.reflectionTexture.renderList.push(newMeshes[0]);
-			newMeshes[0].position.x=40;
-			newMeshes[0].position.z=0;
-			 newMeshes[0].position.y=-5;
-			 newMeshes[0].checkCollisions=true;
-			 //newMeshes[0].renderingGroupId = 2;
-				});		
+			  	
 			waterMaterial.reflectionTexture.renderList.push(skybox);	
 			var pool = BABYLON.SceneLoader.ImportMesh("", "", "pool.babylon", scene, function (newMeshes) {
 			// Set the target of the camera to the first imported mesh
@@ -245,19 +207,283 @@
 			  newMeshes[0].position.y=0-2.5;
 			 // newMeshes[0].renderingGroupId = 2;
 				});		
-				var fountainob = BABYLON.SceneLoader.ImportMesh("", "", "fountain.babylon", scene, function (newMeshes) {
-			// Set the target of the camera to the first imported mesh
-			  waterMaterial.reflectionTexture.renderList.push(newMeshes[0]);
-			  newMeshes[0].position.x=-100;
-			  newMeshes[0].position.z=-100;
-			  newMeshes[0].position.y=-5;
-			 // newMeshes[0].renderingGroupId = 2;
-				});		
 			// set reflection 
 			waterMaterial.reflectionTexture.renderList.push(plane);				
 			waterMaterial.reflectionTexture.renderList.push(skybox);		
 			water.material = waterMaterial;
 			// ------------
+			
+			/*BABYLON.SceneLoader.ImportMesh("", "", "wall.babylon", scene, function (newMeshes) {
+			// Set the target of the camera to the first imported mesh
+			newMeshes[0].position.x=20;
+			newMeshes[0].position.y=-5;
+			newMeshes[0].position.z=-4;
+			newMeshes[0].checkCollisions=true;
+			newMeshes[0].rotation=new BABYLON.Vector3(0,1.5,0);
+				});*/
+				
+			//wall
+			var PlaneMat = new BABYLON.StandardMaterial('ground', scene);
+			PlaneMat.diffuseTexture = new BABYLON.Texture('textureWood.jpg', scene);
+			
+			var PlaneMat1 = new BABYLON.StandardMaterial('ground', scene);
+			PlaneMat1.diffuseTexture = new BABYLON.Texture('floor.jpg', scene);
+			
+			var plane = BABYLON.Mesh.CreatePlane("plane", 100.0, scene);	
+			plane.position = new BABYLON.Vector3(0, -5, 0);
+			plane.rotation.x = Math.PI/2;
+			plane.material = PlaneMat1;
+			plane.backFaceCulling = true;
+			
+			var plane1 = BABYLON.Mesh.CreatePlane("plane", 100.0, scene);	
+			plane1.position = new BABYLON.Vector3(0, -5, 50);
+			plane1.material = PlaneMat;
+			plane1.checkCollisions=true;
+			plane1.backFaceCulling = true;
+			
+			//
+			var plane1 = BABYLON.Mesh.CreatePlane("plane", 40.0, scene);	
+			plane1.position = new BABYLON.Vector3(-30, -5, 0);
+			plane1.material = PlaneMat;
+			plane1.checkCollisions=true;
+			plane1.backFaceCulling = true;
+			var plane1 = BABYLON.Mesh.CreatePlane("plane", 40.0, scene);	
+			plane1.position = new BABYLON.Vector3(-30, 25, 0);
+			plane1.material = PlaneMat;
+			plane1.checkCollisions=true;
+			plane1.backFaceCulling = true;
+			
+			//			
+			var plane1 = BABYLON.Mesh.CreatePlane("plane", 20.0, scene);	
+			plane1.position = new BABYLON.Vector3(40, -5, 10);
+			plane1.material = PlaneMat;
+			plane1.checkCollisions=true;
+			plane1.backFaceCulling = true;
+			var plane1 = BABYLON.Mesh.CreatePlane("plane", 20.0, scene);	
+			plane1.position = new BABYLON.Vector3(40, 15, 10);
+			plane1.material = PlaneMat;
+			plane1.checkCollisions=true;
+			plane1.backFaceCulling = true;
+			var plane1 = BABYLON.Mesh.CreatePlane("plane", 20.0, scene);	
+			plane1.position = new BABYLON.Vector3(40, 35, 10);
+			plane1.material = PlaneMat;
+			plane1.checkCollisions=true;
+			plane1.backFaceCulling = true;
+			
+			//
+			var plane2 = BABYLON.Mesh.CreatePlane("plane", 100.0, scene);	
+			plane2.position = new BABYLON.Vector3(50, -5, 0);
+			plane2.rotation.y = Math.PI/2;
+			plane2.material = PlaneMat;
+			plane2.checkCollisions=true;
+			plane2.backFaceCulling = true;
+			
+			//
+			var plane2 = BABYLON.Mesh.CreatePlane("plane", 50.0, scene);	
+			plane2.position = new BABYLON.Vector3(10, -5, 25);
+			plane2.rotation.y = Math.PI/2;
+			plane2.material = PlaneMat;
+			plane2.checkCollisions=true;
+			plane2.backFaceCulling = true;
+			var plane2 = BABYLON.Mesh.CreatePlane("plane", 50.0, scene);	
+			plane2.position = new BABYLON.Vector3(10, 25, 25);
+			plane2.rotation.y = Math.PI/2;
+			plane2.material = PlaneMat;
+			plane2.checkCollisions=true;
+			plane2.backFaceCulling = true;
+			
+			var plane2 = BABYLON.Mesh.CreatePlane("plane", 40.0, scene);	
+			plane2.position = new BABYLON.Vector3(10, -5, -30);
+			plane2.rotation.y = Math.PI/2;
+			plane2.material = PlaneMat;
+			plane2.checkCollisions=true;
+			plane2.backFaceCulling = true;
+			var plane2 = BABYLON.Mesh.CreatePlane("plane", 40.0, scene);	
+			plane2.position = new BABYLON.Vector3(10, 25, -30);
+			plane2.rotation.y = Math.PI/2;
+			plane2.material = PlaneMat;
+			plane2.checkCollisions=true;
+			plane2.backFaceCulling = true;
+			
+			var plane2 = BABYLON.Mesh.CreatePlane("plane", 40.0, scene);	
+			plane2.position = new BABYLON.Vector3(-10, -5, -30);
+			plane2.rotation.y = Math.PI/2;
+			plane2.material = PlaneMat;
+			plane2.checkCollisions=true;
+			plane2.backFaceCulling = true;
+			var plane2 = BABYLON.Mesh.CreatePlane("plane", 40.0, scene);	
+			plane2.position = new BABYLON.Vector3(-10, 25, -30);
+			plane2.rotation.y = Math.PI/2;
+			plane2.material = PlaneMat;
+			plane2.checkCollisions=true;
+			plane2.backFaceCulling = true;
+			
+			//
+			var plane3 = BABYLON.Mesh.CreatePlane("plane", 100.0, scene);	
+			plane3.position = new BABYLON.Vector3(-50, -5, 0);
+			plane3.rotation.y = Math.PI/2;
+			plane3.material = PlaneMat;
+			plane3.checkCollisions=true;
+			plane3.backFaceCulling = true;
+			
+			var plane4 = BABYLON.Mesh.CreatePlane("plane", 40.0, scene);	
+			plane4.position = new BABYLON.Vector3(30, -5, -50);
+			plane4.material = PlaneMat;
+			plane4.checkCollisions=true;
+			plane4.backFaceCulling = true;
+			var plane4 = BABYLON.Mesh.CreatePlane("plane", 40.0, scene);	
+			plane4.position = new BABYLON.Vector3(30, 25, -50);
+			plane4.material = PlaneMat;
+			plane4.checkCollisions=true;
+			plane4.backFaceCulling = true;
+			
+			var plane5 = BABYLON.Mesh.CreatePlane("plane", 40.0, scene);	
+			plane5.position = new BABYLON.Vector3(-30, -5, -50);
+			plane5.material = PlaneMat;
+			plane5.checkCollisions=true;
+			plane5.backFaceCulling = true;
+			var plane5 = BABYLON.Mesh.CreatePlane("plane", 40.0, scene);	
+			plane5.position = new BABYLON.Vector3(-30, 25, -50);
+			plane5.material = PlaneMat;
+			plane5.checkCollisions=true;
+			plane5.backFaceCulling = true;
+			
+			//bed room
+			BABYLON.SceneLoader.ImportMesh("", "", "bedRoom//bed.babylon", scene, function (newMeshes) {
+			// Set the target of the camera to the first imported mesh
+			for (j = 0; j < newMeshes.length; j++) {                               
+                                if(j<7){
+									newMeshes[j].position.x = -30;
+									newMeshes[j].position.y = 0;
+									newMeshes[j].position.z = 23;
+									newMeshes[j].checkCollisions=true;
+									newMeshes[j].rotation=new BABYLON.Vector3(0,0.5,0);			
+								}
+								else{
+									newMeshes[j].position.x = -35;
+									newMeshes[j].position.y = 0;
+									newMeshes[j].position.z = 35;
+									newMeshes[j].checkCollisions=true;
+									newMeshes[j].rotation=new BABYLON.Vector3(0,1,0);
+								}
+                            }
+				});
+				
+			//bath room
+			BABYLON.SceneLoader.ImportMesh("", "", "bathRoom//toilet.babylon", scene, function (newMeshes) {
+			// Set the target of the camera to the first imported mesh
+			newMeshes[0].position.x=20;
+			newMeshes[0].position.y=-5;
+			newMeshes[0].position.z=0;
+			newMeshes[0].checkCollisions=true;
+				});
+				
+			BABYLON.SceneLoader.ImportMesh("", "", "bathRoom//bath.babylon", scene, function (newMeshes) {
+			// Set the target of the camera to the first imported mesh
+			for (j = 0; j < newMeshes.length; j++) {                               
+									newMeshes[j].position.x = 30;
+									newMeshes[j].position.y = -5;
+									newMeshes[j].position.z = 35;
+									newMeshes[j].checkCollisions=true;
+									//newMeshes[j].rotation=new BABYLON.Vector3(0,0.5,0);			
+                            }
+				});
+				
+			var plane1 = BABYLON.Mesh.CreatePlane("plane", 40.0, scene);	
+			plane1.position = new BABYLON.Vector3(30, -3, 30);
+			plane1.rotation.x = Math.PI/2; 
+			
+			BABYLON.SceneLoader.ImportMesh("", "", "bathRoom//sink.babylon", scene, function (newMeshes) {
+			// Set the target of the camera to the first imported mesh
+			newMeshes[0].position.x=21;
+			newMeshes[0].position.y=0;
+			newMeshes[0].position.z=0;
+			newMeshes[0].checkCollisions=true;
+				});
+				
+			BABYLON.SceneLoader.ImportMesh("", "", "bathRoom//towelRail.babylon", scene, function (newMeshes) {
+			// Set the target of the camera to the first imported mesh
+			newMeshes[0].position.x=30;
+			newMeshes[0].position.y=5;
+			newMeshes[0].position.z=50;
+			newMeshes[0].checkCollisions=true;
+				});
+				
+			//living room
+			BABYLON.SceneLoader.ImportMesh("", "", "livingRoom//shelf.babylon", scene, function (newMeshes) {
+			// Set the target of the camera to the first imported mesh
+			for (j = 0; j < newMeshes.length; j++) { 
+				newMeshes[j].position.x=30;
+				newMeshes[j].position.y=0;
+				newMeshes[j].position.z=-40;
+				newMeshes[j].checkCollisions=true;
+				}
+				});
+				
+			BABYLON.SceneLoader.ImportMesh("", "", "livingRoom//sofa.babylon", scene, function (newMeshes) {
+			// Set the target of the camera to the first imported mesh
+			for (j = 0; j < newMeshes.length; j++) { 
+				newMeshes[j].position.x=30;
+				newMeshes[j].position.y=-5;
+				newMeshes[j].position.z=-5;
+				newMeshes[j].checkCollisions=true;
+				}
+				});
+				
+			BABYLON.SceneLoader.ImportMesh("", "", "livingRoom//tv.babylon", scene, function (newMeshes) {
+			// Set the target of the camera to the first imported mesh
+			for (j = 0; j < newMeshes.length; j++) { 
+				newMeshes[j].position.x=30;
+				newMeshes[j].position.y=0;
+				newMeshes[j].position.z=-40;
+				newMeshes[j].checkCollisions=true;
+				newMeshes[j].rotation=new BABYLON.Vector3(0,Math.PI,0);
+				}
+				});
+				
+			BABYLON.SceneLoader.ImportMesh("", "", "livingRoom//tvShelf.babylon", scene, function (newMeshes) {
+			// Set the target of the camera to the first imported mesh
+			newMeshes[0].position.x=30;
+			newMeshes[0].position.y=0;
+			newMeshes[0].position.z=-40;
+			newMeshes[0].checkCollisions=true;
+				});
+				
+			//kithen
+			//BABYLON.SceneLoader.ImportMesh("", "", "kitchen//table.babylon", scene, function (newMeshes) {
+			// Set the target of the camera to the first imported mesh
+			//for (j = 0; j < newMeshes.length; j++) { 
+			//	newMeshes[j].position.x=-50;
+			//	newMeshes[j].position.y=0;
+			//	newMeshes[j].position.z=-50;
+			//	newMeshes[j].checkCollisions=true;
+			//	}
+			//	});
+				
+			BABYLON.SceneLoader.ImportMesh("", "", "kitchen//refrig.babylon", scene, function (newMeshes) {
+			// Set the target of the camera to the first imported mesh
+			newMeshes[0].position.x=13;
+			newMeshes[0].position.y=0;
+			 newMeshes[0].position.z=0;
+			 newMeshes[0].checkCollisions=true;
+				});
+				
+			BABYLON.SceneLoader.ImportMesh("", "", "kitchen//oven.babylon", scene, function (newMeshes) {
+			// Set the target of the camera to the first imported mesh
+			newMeshes[0].position.x=13;
+			newMeshes[0].position.y=0;
+			 newMeshes[0].position.z=0;
+			 newMeshes[0].checkCollisions=true;
+				});
+			
+			BABYLON.SceneLoader.ImportMesh("", "", "kitchen//chair.babylon", scene, function (newMeshes) {
+			// Set the target of the camera to the first imported mesh
+			newMeshes[0].position.x=13;
+			newMeshes[0].position.y=0;
+			 newMeshes[0].position.z=0;
+			 newMeshes[0].checkCollisions=true;
+				});
+			
 			// createSnow
 			// Create a particle system
 		var particleSystem = new BABYLON.ParticleSystem("particles", 4500, scene);
@@ -424,304 +650,9 @@
 			// Start the particle system
 			fireSystem.start();
 			//------------
-			//Ground
-			// Window ---------------
-            /*var window =    BABYLON.Mesh.CreatePlane("window", 10, scene);
-			var windowMaterial = new BABYLON.StandardMaterial("windowTexture", scene);
-			windowMaterial.diffuseColor = new BABYLON.Color3(1, 0.6, 0.4);
-			windowMaterial.reflectionTexture = new BABYLON.MirrorTexture("window", 512, scene, true); //Create a mirror texture
-			windowMaterial.reflectionTexture.mirrorPlane = new BABYLON.Plane(0, 0.0,0.0, -10.0);
-			//windowMaterial.reflectionTexture.mirrorPlane = scene.getMeshByID("plane");
-			windowMaterial.reflectionTexture.renderList = [plane,skybox];
-			windowMaterial.reflectionTexture.level = 0.6;//Select the level (0.0 > 1.0) of the reflection
-			 window.position.z = 50;
-             window.position.y = -1;
-            // window.rotation.x = -Math.PI/2;
-			 window.material = windowMaterial;*/
-			// -----------------------
-			// Mirror
-			var sphere1 = BABYLON.Mesh.CreateSphere("Sphere1", 16.0, 10.0, scene);
-
-    // Mirror
-	
-    // MATERIALS
-		var simpleMaterial = new BABYLON.StandardMaterial("texture2", scene);
-		simpleMaterial.diffuseColor = new BABYLON.Color3(1, 0, 0);//Red
-		//Creation of a mirror material Vertical
-		var mirrorMaterial = new BABYLON.StandardMaterial("texture4", scene);
-		mirrorMaterial.diffuseColor = new BABYLON.Color3(0.4, 0.4, 0.4);
-		mirrorMaterial.reflectionTexture = new BABYLON.MirrorTexture("mirror", 512, scene, true); //Create a mirror texture
-		mirrorMaterial.reflectionTexture.mirrorPlane = new BABYLON.Plane(0, 0, -1.0, -10.0);
-		mirrorMaterial.reflectionTexture.renderList = [plane,sphere1,skybox];
-		mirrorMaterial.reflectionTexture.level = 0.6;//Select the level (0.0 > 1.0) of the reflection
-		//Applying materials
-		sphere1.material = simpleMaterial;
-		 sphere1.position.x-=20;
-		 sphere1.position.z-=30;
-		// clone mirror
-		var mirror = BABYLON.Mesh.CreatePlane("mirror", 20, scene);
-		mirror.position.y +=6;
-		mirror.position.z -=15;
-		mirror.rotate(BABYLON.Axis.X, 3.14, BABYLON.Space.LOCAL);
-		mirror.material = mirrorMaterial;
-			// Window ---------------
-			var window = BABYLON.Mesh.CreatePlane("mirror", 20, scene);
-				window.rotate(BABYLON.Axis.X, 3.14, BABYLON.Space.LOCAL);
-				window.position.x -=20;
-				window.position.y +=6;
-				window.position.z -=15;
-			windowMaterial  = mirrorMaterial.clone("window");
-			windowMaterial.reflectionTexture.mirrorPlane = new BABYLON.Plane(0, 0, 0.0, -10.0);
-			window.material = windowMaterial;
-			//------------
-		
-	//----fountaineffect----//
-		var fountain = BABYLON.Mesh.CreateBox("fountain",0.1,scene);
-		fountain.position=new BABYLON.Vector3(-100,15,-100);
-		var particleSystemx = new BABYLON.ParticleSystem("particles", 4000, scene);
-		var particleSystemz = new BABYLON.ParticleSystem("particles", 4000, scene);
-
-		particleSystemx.particleTexture = new BABYLON.Texture("textures/bubble.png", scene);
-		particleSystemz.particleTexture = new BABYLON.Texture("textures/bubble.png", scene);
-	
-		particleSystemx.emitter = fountain; // the starting object, the emitter
-		particleSystemx.minEmitBox = new BABYLON.Vector3(0, 1, 0); // Starting all from
-		particleSystemx.maxEmitBox = new BABYLON.Vector3(0, 1, 0); // To...
-		particleSystemz.emitter = fountain;
-		particleSystemz.minEmitBox = new BABYLON.Vector3(0, 1, 0);
-		particleSystemz.maxEmitBox = new BABYLON.Vector3(0, 1, 0);
-		
-		particleSystemx.color1 = new BABYLON.Color4(0.1, 0.1, 0.1,0.0001);
-		particleSystemx.color2 = new BABYLON.Color4(0.1,0.1, 0.1, 0.0001);
-		particleSystemx.colorDead = new BABYLON.Color4(0.1, 0.1, 0.1, 0.0);
-		particleSystemz.color1 = new BABYLON.Color4(0.1, 0.1, 0.1, 0.0001);
-		particleSystemz.color2 = new BABYLON.Color4(0.1, 0.1, 0.1, 0.0001);
-		particleSystemz.colorDead = new BABYLON.Color4(0.1, 0.1, 0.1, 0.0);
-
-		particleSystemx.minSize = 0.1;
-		particleSystemx.maxSize = 1;
-		particleSystemz.minSize = 0.1;
-		particleSystemz.maxSize = 1;
-
-		particleSystemx.minLifeTime = 0.3;
-		particleSystemx.maxLifeTime = 5.0;
-		particleSystemz.minLifeTime = 0.3;
-		particleSystemz.maxLifeTime = 5.0;
-
-		particleSystemx.emitRate = 3500;
-		particleSystemz.emitRate = 3500;
-
-		particleSystemx.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
-		particleSystemz.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
- 
-		particleSystemx.gravity = new BABYLON.Vector3(0, -19.81, 0);
-		particleSystemz.gravity = new BABYLON.Vector3(0, -19.81, 0);
-   
-		particleSystemx.direction1 = new BABYLON.Vector3(2, 6, 0);
-		particleSystemx.direction2 = new BABYLON.Vector3(-2, 6, 0);
-		particleSystemz.direction1 = new BABYLON.Vector3(0,6, 2);
-		particleSystemz.direction2 = new BABYLON.Vector3(0, 6, -2);
-
-		particleSystemx.minAngularSpeed = 1;
-		particleSystemx.maxAngularSpeed = Math.PI;
-		particleSystemz.minAngularSpeed = 1;
-		particleSystemz.maxAngularSpeed = Math.PI;
-
-		particleSystemx.minEmitPower = 2;
-		particleSystemx.maxEmitPower = 3;
-		particleSystemx.updateSpeed = 0.005;
-		particleSystemz.minEmitPower = 2;
-		particleSystemz.maxEmitPower = 3;
-		particleSystemz.updateSpeed = 0.005;
-
-		particleSystemx.start();
-		particleSystemz.start();
-
-		// Fountain's animation
-		var keys = [];
-		var animation = new BABYLON.Animation("animation", "rotation.y", 360, BABYLON.Animation.ANIMATIONTYPE_FLOAT,
-		BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE );																	
-		// At the animation key 0, the value of scaling is "1"
-		keys.push({
-        frame: 0,
-        value: 0
-		});
-
-		// At the animation key 50, the value of scaling is "0.2"
-		keys.push({
-        frame: 50,
-        value: Math.PI
-		});
-
-		// At the animation key 100, the value of scaling is "1"
-		keys.push({
-        frame: 100,
-        value: 0
-		});
-
-		// Launch animation
-		animation.setKeys(keys);
-		fountain.animations.push(animation);
-		scene.beginAnimation(fountain, 0, 100, true);
-	//-----fountain effect end-----//
-		
-	//----fountain path----//
-		var p1 = new BABYLON.Vector3(-100, -5, -20);
-		var p2 = new BABYLON.Vector3(-110, -5, 20);
-		var p3 = new BABYLON.Vector3(-120, -5, -20);
-		var p4 = new BABYLON.Vector3(-130, -5, 20);
-		var p5 = new BABYLON.Vector3(-140, -5, -20);
-		var p6 = new BABYLON.Vector3(-150, -5, 20);
-		// Create a particle system
-		var a1 = new BABYLON.ParticleSystem("particles", 2000, scene);
-		var a2	= new BABYLON.ParticleSystem("particles", 2000, scene);
-		var a3 = new BABYLON.ParticleSystem("particles", 2000, scene);
-		var a4 = new BABYLON.ParticleSystem("particles", 2000, scene);
-		var a5 = new BABYLON.ParticleSystem("particles", 2000, scene);
-		var a6 = new BABYLON.ParticleSystem("particles", 2000, scene);
-
-		//Texture of each particle
-		a1.particleTexture = new BABYLON.Texture("textures/bubble.png", scene);
-		a2.particleTexture = new BABYLON.Texture("textures/bubble.png", scene);
-		a3.particleTexture = new BABYLON.Texture("textures/bubble.png", scene);
-		a4.particleTexture = new BABYLON.Texture("textures/bubble.png", scene);
-		a5.particleTexture = new BABYLON.Texture("textures/bubble.png", scene);
-		a6.particleTexture = new BABYLON.Texture("textures/bubble.png", scene);
-
-		// Where the particles come from
-		a1.emitter = p1;
-		a1.minEmitBox = new BABYLON.Vector3(0, 0, 0);
-		a2.emitter = p2;
-		a2.minEmitBox = new BABYLON.Vector3(0, 0, 0);
-		a3.emitter = p3;
-		a3.minEmitBox = new BABYLON.Vector3(0, 0, 0);
-		a4.emitter = p4;
-		a4.minEmitBox = new BABYLON.Vector3(0, 0, 0);
-		a5.emitter = p5;
-		a5.minEmitBox = new BABYLON.Vector3(0, 0, 0);
-		a6.emitter = p6;
-		a6.minEmitBox = new BABYLON.Vector3(0, 0, 0);
-	
-		// Colors of all particles
-		a1.color1 = new BABYLON.Color4(0.1, 0.1, 0.1, 0.001);
-		a1.color2 = new BABYLON.Color4(0.1, 0.1, 0.1, 0.001);
-		a1.colorDead = new BABYLON.Color4(0.1, 0.1, 0.1, 0.0);
-		a2.color1 = new BABYLON.Color4(0.1, 0.1, 0.1, 0.001);
-		a2.color2 = new BABYLON.Color4(0.1, 0.1, 0.1, 0.001);
-		a2.colorDead = new BABYLON.Color4(0.1, 0.1, 0.1, 0.0);
-		a3.color1 = new BABYLON.Color4(0.1, 0.1, 0.1, 0.001);
-		a3.color2 = new BABYLON.Color4(0.1, 0.1, 0.1, 0.001);
-		a3.colorDead = new BABYLON.Color4(0.1, 0.1, 0.1, 0.0);
-		a4.color1 = new BABYLON.Color4(0.1, 0.1, 0.1, 0.001);
-		a4.color2 = new BABYLON.Color4(0.1, 0.1, 0.1, 0.001);
-		a4.colorDead = new BABYLON.Color4(0.1, 0.1, 0.1, 0.0);
-		a5.color1 = new BABYLON.Color4(0.1, 0.1, 0.1, 0.001);
-		a5.color2 = new BABYLON.Color4(0.1, 0.1, 0.1, 0.001);
-		a5.colorDead = new BABYLON.Color4(0.1, 0.1, 0.1, 0.0);
-		a6.color1 = new BABYLON.Color4(0.1, 0.1, 0.1, 0.001);
-		a6.color2 = new BABYLON.Color4(0.1, 0.1, 0.1, 0.001);
-		a6.colorDead = new BABYLON.Color4(0.1, 0.1, 0.1, 0.0);
-		
-		// Size of each particle (random between...
-		a1.minSize = 1.0;
-		a2.minSize = 1.0;
-		a3.minSize = 1.0;
-		a4.minSize = 1.0;
-		a5.minSize = 1.0;
-		a6.minSize = 1.0;
-	
-		// Life time of each particle (random between...
-		a1.minLifeTime = 8.0;
-		a2.minLifeTime = 8.0;
-		a3.minLifeTime = 8.0;
-		a4.minLifeTime = 8.0;
-		a5.minLifeTime = 8.0;
-		a6.minLifeTime = 8.0;
-		//particleSystem.maxLifeTime = 1.5;
-	
-		// Emission rate
-		a1.emitRate = 300;
-		a2.emitRate = 300;
-		a3.emitRate = 300;
-		a4.emitRate = 300;
-		a5.emitRate = 300;
-		a6.emitRate = 300;
-	
-		// Blend mode : BLENDMODE_ONEONE, or BLENDMODE_STANDARD
-		a1.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
-		a2.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
-		a3.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
-		a4.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
-		a5.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
-		a6.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
-	
-		// Set the gravity of all particles
-		a1.gravity = new BABYLON.Vector3(0, -9.81, 0);
-		a2.gravity = new BABYLON.Vector3(0, -9.81, 0);
-		a3.gravity = new BABYLON.Vector3(0, -9.81, 0);
-		a4.gravity = new BABYLON.Vector3(0, -9.81, 0);
-		a5.gravity = new BABYLON.Vector3(0, -9.81, 0);
-		a6.gravity = new BABYLON.Vector3(0, -9.81, 0);
-			
-		// Direction of each particle after it has been emitted
-		a1.direction1 = new BABYLON.Vector3(0, 12, 3.5);
-		a1.direction2 = new BABYLON.Vector3(0, 12, 3.5);
-		a2.direction1 = new BABYLON.Vector3(0, 12, -3.5);
-		a2.direction2 = new BABYLON.Vector3(0, 12, -3.5);
-		a3.direction1 = new BABYLON.Vector3(0, 12, 3.5);
-		a3.direction2 = new BABYLON.Vector3(0, 12, 3.5);
-		a4.direction1 = new BABYLON.Vector3(0, 12, -3.5);
-		a4.direction2 = new BABYLON.Vector3(0, 12, -3.5);
-		a5.direction1 = new BABYLON.Vector3(0, 12, 3.5);
-		a5.direction2 = new BABYLON.Vector3(0, 12, 3.5);
-		a6.direction1 = new BABYLON.Vector3(0, 12, -3.5);
-		a6.direction2 = new BABYLON.Vector3(0, 12, -3.5);
-	
-		// Angular speed, in radians
-		a1.minAngularSpeed = 1;
-		a1.maxAngularSpeed = Math.PI;
-		a2.minAngularSpeed = 1;
-		a2.maxAngularSpeed = Math.PI;
-		a3.minAngularSpeed = 1;
-		a3.maxAngularSpeed = Math.PI;
-		a4.minAngularSpeed = 1;
-		a4.maxAngularSpeed = Math.PI;
-		a5.minAngularSpeed = 1;
-		a5.maxAngularSpeed = Math.PI;
-		a6.minAngularSpeed = 1;
-		a6.maxAngularSpeed = Math.PI;
-	
-		// Speed
-		a1.minEmitPower = 1.875;
-		a1.maxEmitPower = 2;
-		a1.updateSpeed = 0.005;
-		a2.minEmitPower = 1.875;
-		a2.maxEmitPower = 2;
-		a2.updateSpeed = 0.005;
-		a3.minEmitPower = 1.875;
-		a3.maxEmitPower = 2;
-		a3.updateSpeed = 0.005;
-		a4.minEmitPower = 1.875;
-		a4.maxEmitPower = 2;
-		a4.updateSpeed = 0.005;
-		a5.minEmitPower = 1.875;
-		a5.maxEmitPower = 2;
-		a5.updateSpeed = 0.005;
-		a6.minEmitPower = 1.875;
-		a6.maxEmitPower = 2;
-		a6.updateSpeed = 0.005;
-	
-		// Start the particle system
-		a1.start();
-		a2.start();
-		a3.start();
-		a4.start();
-		a5.start();
-		a6.start();
-	//---- fountain path end----//
-		return scene;
+            return scene;
         };
-
+        
         
         var scene = createScene();
 
