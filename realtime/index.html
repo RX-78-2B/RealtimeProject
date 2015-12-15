@@ -216,7 +216,7 @@
 			// Set the target of the camera to the first imported mesh
 			  waterMaterial.reflectionTexture.renderList.push(newMeshes[0]);
 			  newMeshes[0].position.x=100;
-			  //newMeshes[0].position.z=100;
+			  
 			  newMeshes[0].position.y=0-2.5;
 			 // newMeshes[0].renderingGroupId = 2;
 				});		
@@ -1002,7 +1002,8 @@
 	
 	//----end fountain path obj---//
 	// video 
-	 var light = new BABYLON.PointLight("Omni", new BABYLON.Vector3(30, 4.7, -38.75), scene);
+	 var lightTV = new BABYLON.PointLight("Omni", new BABYLON.Vector3(30.05, 4.65, -38.75), scene);
+	 lightTV.intensity= 0.2;
 	var videoPlane = BABYLON.Mesh.CreatePlane("Screen", 10.75, scene);
     videoPlane.position.x = 30.05; 
 	videoPlane.position.z = -38.75; 
@@ -1011,8 +1012,7 @@
 	videoPlane.rotation.y+= Math.PI;
 	var videoMat = new BABYLON.StandardMaterial("textVid", scene);
     videoMat.diffuseTexture = new BABYLON.VideoTexture("video", ["textures/Algo.mp4"], scene, false);
-    //videoMat.backFaceCulling = false;
-	videoPlane.material=videoMat;
+	//videoPlane.material=videoMat;
 	//-----------
 		return scene;
         };
