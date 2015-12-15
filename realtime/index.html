@@ -1021,7 +1021,7 @@
 	//path4.position.z= -160;
 	pw4 = mirrorMaterial.clone("window");
 	pw4.reflectionTexture.mirrorPlane = new BABYLON.Plane(0, 0, 0.0, -10.0);
-	path4.material=mirrorMaterial;
+	path4.material=pw4;
 	/*var wpath = BABYLON.Mesh.CreatePlane("wpat4", 60, scene);
 	wpath.position.y = -5;
 	wpath.position.x=-125;
@@ -1031,8 +1031,12 @@
 	wpath.position.y = -5;
 	wpath.position.x=0;
 	wpath.position.z= -125;
+	wpath.material = wt;
+	var cwpath = BABYLON.Mesh.CreateTorus("ft", 85, 1, 4, scene);
+		cwpath.position = new BABYLON.Vector3(0, -5, -125);
+		cwpath.rotation = new BABYLON.Vector3( 0, Math.PI /4, 0);
 	
-	wpath.material = pw4;
+	
 	//----end fountain path obj---//
 		return scene;
 
