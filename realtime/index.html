@@ -139,7 +139,7 @@
             var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0,7, 0), scene);
             camera.attachControl(canvas, true);
 			camera.checkCollisions = true;
-			camera.position=new BABYLON.Vector3(0, 3, -70);
+			//camera.position=new BABYLON.Vector3(0, 3, -70);
             camera.rotation=new BABYLON.Vector3(0,0,0);
         
             //Fong ☺ Film
@@ -182,7 +182,7 @@
 			scene.registerBeforeRender(function () {
 				skybox.rotation.y += 0.0001;	
 				if(camera.position.y <7) camera.position.y =7;
-				if(camera.position.y >7) camera.position.y =7;
+				//if(camera.position.y >7) camera.position.y =7;
 				if(camera.rotation.x <-Math.PI/3) camera.rotation.x =-Math.PI/3;
 				if(camera.rotation.x >Math.PI/3) camera.rotation.x =Math.PI/3;
 				});
@@ -642,7 +642,7 @@
 	
     // MATERIALS
 		//Creation of a mirror material Vertical
-		/*var mirrorMaterial = new BABYLON.StandardMaterial("texture4", scene);
+		var mirrorMaterial = new BABYLON.StandardMaterial("texture4", scene);
 		mirrorMaterial.diffuseColor = new BABYLON.Color3(0.4, 0.4, 0.4);
 		mirrorMaterial.reflectionTexture = new BABYLON.MirrorTexture("mirror", 512, scene, true); //Create a mirror texture
 		mirrorMaterial.reflectionTexture.mirrorPlane = new BABYLON.Plane(0, 0, -1.0, -10.0);
@@ -663,7 +663,7 @@
 				window.position.z -=15;
 			windowMaterial  = mirrorMaterial.clone("window");
 			windowMaterial.reflectionTexture.mirrorPlane = new BABYLON.Plane(0, 0, 0.0, -10.0);
-			window.material = windowMaterial;*/
+			window.material = windowMaterial;
 			//------------
 	//----fountainobj----//
 		/*var ftex = new BABYLON.StandardMaterial("ftex", scene);
@@ -996,7 +996,7 @@
 	videoPlane.rotation.y+= Math.PI;
 	var videoMat = new BABYLON.StandardMaterial("textVid", scene);
     videoMat.diffuseTexture = new BABYLON.VideoTexture("video", ["textures/Algo.mp4"], scene, false);
-	//videoPlane.material=videoMat;
+	videoPlane.material=videoMat;
 	//-----------
 		return scene;
         };
@@ -1012,4 +1012,4 @@
         });
     </script>
 </body>
-</html>
+</html>	
